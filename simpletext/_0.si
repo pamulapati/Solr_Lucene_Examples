@@ -1,0 +1,25 @@
+    version 4.5.1
+    number of documents 4
+    uses compound file true
+    diagnostics 8
+      key timestamp
+      value 1387839909612
+      key os.version
+      value 6.1
+      key os
+      value Windows 7
+      key lucene.version
+      value 4.5.1 1533280 - mark - 2013-10-17 21:40:03
+      key source
+      value flush
+      key os.arch
+      value amd64
+      key java.version
+      value 1.7.0_45
+      key java.vendor
+      value Oracle Corporation
+    attributes 0
+    files 3
+      file _0.cfs
+      file _0.cfe
+      file _0.si
