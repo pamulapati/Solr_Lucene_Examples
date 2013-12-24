@@ -3,7 +3,7 @@
     uses compound file true
     diagnostics 8
       key timestamp
-      value 1387839909612
+      value 1387845994329
       key os.version
       value 6.1
       key os
