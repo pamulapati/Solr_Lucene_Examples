@@ -9,10 +9,11 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.index.StoredDocument;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -26,8 +27,8 @@ import org.apache.lucene.util.Version;
 public class TextFileIndex {
 	
 	public static void main(String args[]) throws IOException, Exception{
-		StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_45);
-		IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_45,analyzer);
+		StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_50);
+		IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_50,analyzer);
 		conf.setCodec(new SimpleTextCodec());
 		File simpleText = new File("simpletext");
 		SimpleFSDirectory directory = new SimpleFSDirectory(simpleText);
@@ -42,9 +43,9 @@ public class TextFileIndex {
 		
 		
 		String querystr = "lucene";
-		Query q = new QueryParser(Version.LUCENE_40, "title", analyzer).parse(querystr);
+		Query q = new QueryParser(Version.LUCENE_50, "title", analyzer).parse(querystr);
 		int hitsPerPage = 10;
-		IndexReader reader = IndexReader.open(directory);
+		IndexReader reader = DirectoryReader.open(directory);
 		IndexSearcher searcher = new IndexSearcher(reader);
 		TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
 		searcher.search(q, collector);
@@ -52,7 +53,7 @@ public class TextFileIndex {
 		System.out.println("Found " + hits.length + " hits.");
 		for(int i=0;i<hits.length;++i) {
 		    int docId = hits[i].doc;
-		    Document d = searcher.doc(docId);
+		    StoredDocument d = searcher.doc(docId);
 		    System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title"));
 		}
 		
